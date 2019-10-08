@@ -1,0 +1,297 @@
+{
+	"info": {
+		"_postman_id": "1ae3ed2d-ea82-489d-8b96-24c376853a47",
+		"name": "curso-java-rest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Multiple Pessoas",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\r\n    \"nome\": \"Alice\",\r\n    \"cpf\": \"101\"\r\n},\r\n{\r\n    \"nome\": \"Bob\",\r\n    \"cpf\": \"102\"\r\n},\r\n{\r\n    \"nome\": \"Cesar\",\r\n    \"cpf\": \"103\"\r\n},\r\n{\r\n    \"nome\": \"David\",\r\n    \"cpf\": \"104\"\r\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/curso-java-rest/pessoa",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso-java-rest",
+						"pessoa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Multiple Contas",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\r\n    \"id\": \"201\",\r\n\t\"agencia\": \"21\",\r\n\t\"numeroDaConta\": \"003\",\r\n\t\"senha\": \"123\"\r\n},\r\n{\r\n    \"id\": \"202\",\r\n\t\"agencia\": \"22\",\r\n\t\"numeroDaConta\": \"004\",\r\n\t\"senha\": \"321\"\r\n},\r\n{\r\n    \"id\": \"203\",\r\n\t\"agencia\": \"23\",\r\n\t\"numeroDaConta\": \"005\",\r\n\t\"senha\": \"312\"\r\n},\r\n{\r\n    \"id\": \"204\",\r\n\t\"agencia\": \"23\",\r\n\t\"numeroDaConta\": \"006\",\r\n\t\"senha\": \"213\"\r\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/curso-java-rest/conta",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso-java-rest",
+						"conta"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read Pessoa map",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/curso-java-rest/pessoa",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso-java-rest",
+						"pessoa"
+					]
+				},
+				"description": "Read the MapRepositorio<Pessoa>"
+			},
+			"response": []
+		},
+		{
+			"name": "Read Conta map",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/curso-java-rest/conta",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso-java-rest",
+						"conta"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPessoaByCPF_102",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/curso-java-rest/pessoa/102",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso-java-rest",
+						"pessoa",
+						"102"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetContaByID_203",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/curso-java-rest/conta/203",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso-java-rest",
+						"conta",
+						"203"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetContaByAgenciaEConta_23_006",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/curso-java-rest/conta/23/006",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso-java-rest",
+						"conta",
+						"23",
+						"006"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Bob to Bobby",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Bobby\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/curso-java-rest/pessoa/102",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso-java-rest",
+						"pessoa",
+						"102"
+					]
+				},
+				"description": "Update name to Struck"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete PathParam103",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/curso-java-rest/pessoa/111",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso-java-rest",
+						"pessoa",
+						"111"
+					]
+				},
+				"description": "Deletar Pessoa 111 por PathParam"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete QueryParam 202",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/curso-java-rest/pessoa?cpf=111",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso-java-rest",
+						"pessoa"
+					],
+					"query": [
+						{
+							"key": "cpf",
+							"value": "111"
+						}
+					]
+				},
+				"description": "Deletar 111 por QueryParam (variável na url)"
+			},
+			"response": []
+		},
+		{
+			"name": "Associate Conta 203 to Bobby",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/curso-java-rest/conta/associar/111/555",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso-java-rest",
+						"conta",
+						"associar",
+						"111",
+						"555"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
