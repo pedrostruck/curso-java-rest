@@ -9,10 +9,7 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import com.stefanini.hackathon.rest.exceptions.EmptyListException;
 import com.stefanini.hackathon.rest.exceptions.NegocioException;
-import com.stefanini.hackathon.rest.exceptions.PessoaAlreadyRegisteredException;
-import com.stefanini.hackathon.rest.exceptions.PessoaNotFoundException;
 
 @Provider
 public class InterceptadorError implements ExceptionMapper<Exception> {
@@ -22,9 +19,7 @@ public class InterceptadorError implements ExceptionMapper<Exception> {
 		Status status = null;
 		final StringWriter sw = new StringWriter();
 
-		if (ex instanceof NegocioException || ex instanceof EmptyListException
-				|| ex instanceof PessoaNotFoundException
-				|| ex instanceof PessoaAlreadyRegisteredException) {
+		if (ex instanceof NegocioException) {
 			status = Status.BAD_REQUEST;
 		} else {
 			status = Status.INTERNAL_SERVER_ERROR;

@@ -15,9 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.stefanini.hackathon.rest.entidades.Pessoa;
-import com.stefanini.hackathon.rest.exceptions.EmptyListException;
-import com.stefanini.hackathon.rest.exceptions.PessoaAlreadyRegisteredException;
-import com.stefanini.hackathon.rest.exceptions.PessoaNotFoundException;
+import com.stefanini.hackathon.rest.exceptions.NegocioException;
 import com.stefanini.hackathon.rest.persistence.Repositorio;
 
 @Path("/pessoa")
@@ -28,9 +26,9 @@ public class PessoaAPI {
 	Repositorio repositorio;
 
 	@GET
-	public Response getPessoasMap() throws EmptyListException {
+	public Response getPessoas() throws NegocioException {
 		if (repositorio.getMapPessoa().isEmpty()) {
-			throw new EmptyListException("Nenhuma pessoa foi encontrada.");
+			throw new NegocioException("Não há pessoas cadastradas.");
 		}
 		return Response.ok(repositorio.getMapPessoa()).build();
 	}
@@ -38,22 +36,34 @@ public class PessoaAPI {
 	@GET
 	@Path("/{cpf}")
 	public Response getPessoaByCPF(@PathParam("cpf") String cpf)
-			throws PessoaNotFoundException {
+			throws NegocioException {
 		Pessoa pessoa = repositorio.getMapPessoa().get(cpf);
 		if (pessoa == null) {
-			throw new PessoaNotFoundException(
+			throw new NegocioException(
 					"Não há pessoa cadastrada com este CPF.");
 		}
 		return Response.ok(pessoa).build();
 	}
 
 	@POST
+	@Path("/addSingle")
+	public Response insertPessoa(Pessoa pessoa) throws NegocioException {
+		if (repositorio.getMapPessoa().get(pessoa.getCpf()) != null) {
+			throw new NegocioException("Já existe pessoa cadastrada com o CPF "
+					+ pessoa.getCpf() + ".");
+		}
+		repositorio.getMapPessoa().put(pessoa.getCpf(), pessoa);
+		return Response.ok(repositorio.getMapPessoa()).build();
+	}
+
+	@POST
+	@Path("/addMultiple")
 	public Response insertPessoas(ArrayList<Pessoa> pessoas)
-			throws PessoaAlreadyRegisteredException {
+			throws NegocioException {
 		for (Pessoa pessoa : pessoas) {
 			if (repositorio.getMapPessoa().get(pessoa.getCpf()) != null) {
-				throw new PessoaAlreadyRegisteredException(
-						"Já existe pessoa cadastrar com o CPF "
+				throw new NegocioException(
+						"Já existe pessoa cadastrada com o CPF "
 								+ pessoa.getCpf() + ".");
 			}
 			repositorio.getMapPessoa().put(pessoa.getCpf(), pessoa);

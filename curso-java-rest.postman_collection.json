@@ -22,7 +22,7 @@
 					"raw": "[{\r\n    \"nome\": \"Alice\",\r\n    \"cpf\": \"101\"\r\n},\r\n{\r\n    \"nome\": \"Bob\",\r\n    \"cpf\": \"102\"\r\n},\r\n{\r\n    \"nome\": \"Cesar\",\r\n    \"cpf\": \"103\"\r\n},\r\n{\r\n    \"nome\": \"David\",\r\n    \"cpf\": \"104\"\r\n}]"
 				},
 				"url": {
-					"raw": "http://localhost:8080/curso-java-rest/pessoa",
+					"raw": "http://localhost:8080/curso-java-rest/pessoa/addMultiple",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -30,7 +30,40 @@
 					"port": "8080",
 					"path": [
 						"curso-java-rest",
-						"pessoa"
+						"pessoa",
+						"addMultiple"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Single Pessoa",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Edgar\",\r\n    \"cpf\": \"105\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/curso-java-rest/pessoa/addSingle",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso-java-rest",
+						"pessoa",
+						"addSingle"
 					]
 				}
 			},
@@ -53,7 +86,7 @@
 					"raw": "[{\r\n    \"id\": \"201\",\r\n\t\"agencia\": \"21\",\r\n\t\"numeroDaConta\": \"003\",\r\n\t\"senha\": \"123\"\r\n},\r\n{\r\n    \"id\": \"202\",\r\n\t\"agencia\": \"22\",\r\n\t\"numeroDaConta\": \"004\",\r\n\t\"senha\": \"321\"\r\n},\r\n{\r\n    \"id\": \"203\",\r\n\t\"agencia\": \"23\",\r\n\t\"numeroDaConta\": \"005\",\r\n\t\"senha\": \"312\"\r\n},\r\n{\r\n    \"id\": \"204\",\r\n\t\"agencia\": \"23\",\r\n\t\"numeroDaConta\": \"006\",\r\n\t\"senha\": \"213\"\r\n}]"
 				},
 				"url": {
-					"raw": "http://localhost:8080/curso-java-rest/conta",
+					"raw": "http://localhost:8080/curso-java-rest/conta/addMultiple",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -61,7 +94,40 @@
 					"port": "8080",
 					"path": [
 						"curso-java-rest",
-						"conta"
+						"conta",
+						"addMultiple"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Single Conta",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"205\",\r\n\t\"agencia\": \"23\",\r\n\t\"numeroDaConta\": \"007\",\r\n\t\"senha\": \"213\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/curso-java-rest/conta/addSingle",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso-java-rest",
+						"conta",
+						"addSingle"
 					]
 				}
 			},

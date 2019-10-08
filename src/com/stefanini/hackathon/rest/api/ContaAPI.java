@@ -19,6 +19,7 @@ import javax.ws.rs.core.Response;
 
 import com.stefanini.hackathon.rest.entidades.Conta;
 import com.stefanini.hackathon.rest.entidades.Pessoa;
+import com.stefanini.hackathon.rest.exceptions.NegocioException;
 import com.stefanini.hackathon.rest.persistence.Repositorio;
 
 @Path("/conta")
@@ -29,20 +30,28 @@ public class ContaAPI {
 	Repositorio repositorio;
 
 	@GET
-	public Response get() {
+	public Response getContas() throws NegocioException {
+		if (repositorio.getMapConta().isEmpty()) {
+			throw new NegocioException("Não há contas cadastradas.");
+		}
 		return Response.ok(repositorio.getMapConta()).build();
 	}
 
 	@GET
 	@Path("/{id}")
-	public Response getPessoaByCPF(@PathParam("id") Integer id) {
+	public Response getContaByID(@PathParam("id") Integer id)
+			throws NegocioException {
 		Conta conta = repositorio.getMapConta().get(id);
+		if (conta == null) {
+			throw new NegocioException("Não há conta cadastrada com esse id.");
+		}
 		return Response.ok(conta).build();
 	}
 
 	@GET
 	@Path("/{agencia}/{numeroDaConta}")
-	public Response getPessoaByCPF(@PathParam("agencia") String agencia,
+	public Response getContaByAgenciaEConta(
+			@PathParam("agencia") String agencia,
 			@PathParam("numeroDaConta") String numeroDaConta) {
 		Conta contaFetched = null;
 		Iterator<Entry<Integer, Conta>> itr = repositorio.getMapConta()
@@ -59,7 +68,18 @@ public class ContaAPI {
 	}
 
 	@POST
-	public Response inserir(ArrayList<Conta> contas) {
+	@Path("/addSingle")
+	public Response inserirConta(Conta conta) throws NegocioException {
+		if (repositorio.getMapConta().get(conta.getId()) != null) {
+			throw new NegocioException("Já existe conta cadastrada com o id "
+					+ conta.getId() + ".");
+		}
+		return Response.ok(repositorio.getMapConta()).build();
+	}
+
+	@POST
+	@Path("/addMultiple")
+	public Response inserirContas(ArrayList<Conta> contas) {
 		for (Conta conta : contas) {
 			repositorio.getMapConta().put(conta.getId(), conta);
 		}
@@ -82,9 +102,12 @@ public class ContaAPI {
 	@PUT
 	@Path("/associar/{cpf}/{id}")
 	public Response alterar(@PathParam("cpf") String cpf,
-			@PathParam("id") Integer id) {
+			@PathParam("id") Integer id) throws NegocioException {
 		Pessoa pessoa = repositorio.getMapPessoa().get(cpf);
 		Conta conta = repositorio.getMapConta().get(id);
+		if (pessoa == null || conta == null) {
+			throw new NegocioException("Pessoa e/ou Conta inexistente(s).");
+		}
 		pessoa.setConta(conta);
 		return Response.ok(repositorio.getMapPessoa()).build();
 	}
