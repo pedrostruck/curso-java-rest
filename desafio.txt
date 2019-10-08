@@ -1,0 +1,9 @@
+Desafio para fazerem:
+
+- consultar pessoa por cpf
+
+- consultar conta por id (se conseguirem fazer por agência e conta melhor ainda)
+
+- inserção múltipla das pessoas
+
+- inserção múltipla das contas

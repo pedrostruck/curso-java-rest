@@ -1,0 +1,35 @@
+PESSOA
+
+Deletar PathParam 
+http://localhost:8080/curso-java-rest/pessoa/102
+
+Deletar QueryParam 102
+http://localhost:8080/curso-java-rest/pessoa?cpf=102
+
+Editar PathParam 102
+http://localhost:8080/curso-java-rest/pessoa?cpf=102
+JSON
+{
+    "nome": "Struck",
+    "cpf": "102"
+}
+
+---------------------------------------------------------------
+
+CONTA
+
+Inserir
+http://localhost:8080/curso-java-rest/conta
+JSON
+{
+	"id": "555",
+	"agencia": "999",
+	"numeroDaConta": "777",
+	"senha": "123"
+}
+
+Deletar PathParam 102
+http://localhost:8080/curso-java-rest/pessoa/102
+
+Deletar QueryParam 102
+http://localhost:8080/curso-java-rest/pessoa?cpf=102

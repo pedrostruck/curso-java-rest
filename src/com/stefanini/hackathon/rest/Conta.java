@@ -14,12 +14,12 @@ public class Conta {
 		this.agencia = agencia;
 	}
 
-	public String getConta() {
+	public String getNumeroDaConta() {
 		return numeroDaConta;
 	}
 
-	public void setConta(String conta) {
-		this.numeroDaConta = conta;
+	public void setNumeroDaConta(String numeroDaConta) {
+		this.numeroDaConta = numeroDaConta;
 	}
 
 	public String getSenha() {

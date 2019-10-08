@@ -1,5 +1,7 @@
 package com.stefanini.hackathon.rest;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -20,13 +22,22 @@ public class PessoaAPI {
 	Repositorio repositorio;
 
 	@GET
-	public Response get() {
+	public Response getPessoasMap() {
 		return Response.ok(repositorio.getMapPessoa()).build();
 	}
 
+	@GET
+	@Path("/{cpf}")
+	public Response getPessoaByCPF(@PathParam("cpf") String cpf) {
+		Pessoa pessoa = repositorio.getMapPessoa().get(cpf);
+		return Response.ok(pessoa).build();
+	}
+
 	@POST
-	public Response inserir(Pessoa pessoa) {
-		repositorio.getMapPessoa().put(pessoa.getCpf(), pessoa);
+	public Response insertPessoas(ArrayList<Pessoa> pessoas) {
+		for (Pessoa pessoa : pessoas) {
+			repositorio.getMapPessoa().put(pessoa.getCpf(), pessoa);
+		}
 		return Response.ok(repositorio.getMapPessoa()).build();
 	}
 

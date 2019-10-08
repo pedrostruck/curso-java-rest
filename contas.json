@@ -1,0 +1,24 @@
+[{
+    "id": "201",
+	"agencia": "21",
+	"numeroDaConta": "003",
+	"senha": "123"
+},
+{
+    "id": "202",
+	"agencia": "22",
+	"numeroDaConta": "004",
+	"senha": "321"
+},
+{
+    "id": "203",
+	"agencia": "23",
+	"numeroDaConta": "005",
+	"senha": "312"
+},
+{
+    "id": "204",
+	"agencia": "23",
+	"numeroDaConta": "006",
+	"senha": "213"
+}]

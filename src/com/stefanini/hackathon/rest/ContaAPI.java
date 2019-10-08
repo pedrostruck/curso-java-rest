@@ -1,5 +1,10 @@
 package com.stefanini.hackathon.rest;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -15,6 +20,7 @@ import javax.ws.rs.core.Response;
 @Path("/conta")
 @Produces(MediaType.APPLICATION_JSON)
 public class ContaAPI {
+
 	@Inject
 	Repositorio repositorio;
 
@@ -23,25 +29,50 @@ public class ContaAPI {
 		return Response.ok(repositorio.getMapConta()).build();
 	}
 
+	@GET
+	@Path("/{id}")
+	public Response getPessoaByCPF(@PathParam("id") Integer id) {
+		Conta conta = repositorio.getMapConta().get(id);
+		return Response.ok(conta).build();
+	}
+
+	@GET
+	@Path("/{agencia}/{numeroDaConta}")
+	public Response getPessoaByCPF(@PathParam("agencia") String agencia,
+			@PathParam("numeroDaConta") String numeroDaConta) {
+		Conta contaFetched = null;
+		Iterator<Entry<Integer, Conta>> itr = repositorio.getMapConta()
+				.entrySet().iterator();
+		while (itr.hasNext()) {
+			Map.Entry<Integer, Conta> entry = itr.next();
+			Conta currentConta = entry.getValue();
+			if (currentConta.getAgencia().equals(agencia)
+					&& currentConta.getNumeroDaConta().equals(numeroDaConta)) {
+				contaFetched = currentConta;
+			}
+		}
+		return Response.ok(contaFetched).build();
+	}
+
 	@POST
-	public Response inserir(Pessoa pessoa, Conta conta) {
-		repositorio.getMapConta().put(conta.getId(), conta);
-		pessoa.setConta(conta);
-		repositorio.getMapPessoa().put(pessoa.getCpf(), pessoa);
-		return Response.ok(repositorio.getMapPessoa()).build();
+	public Response inserir(ArrayList<Conta> contas) {
+		for (Conta conta : contas) {
+			repositorio.getMapConta().put(conta.getId(), conta);
+		}
+		return Response.ok(repositorio.getMapConta()).build();
 	}
 
 	@DELETE
 	@Path("/{id}")
 	public Response excluirPathParam(@PathParam("id") Integer id) {
 		repositorio.getMapConta().remove(id);
-		return Response.ok(repositorio.getMapPessoa()).build();
+		return Response.ok(repositorio.getMapConta()).build();
 	}
 
 	@DELETE
 	public Response excluirQueryParam(@QueryParam("id") Integer id) {
 		repositorio.getMapConta().remove(id);
-		return Response.ok(repositorio.getMapPessoa()).build();
+		return Response.ok(repositorio.getMapConta()).build();
 	}
 
 	@PUT
