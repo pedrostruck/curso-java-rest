@@ -1,0 +1,13 @@
+InserirPessoa
+http://localhost:8080/curso-java-rest/pessoa
+JSON
+{
+    "nome": "Pedro",
+    "cpf": "666666"
+}
+
+Deletar PathParam 666666
+http://localhost:8080/curso-java-rest/pessoa/666666
+
+Deletar QueryParam 666666
+http://localhost:8080/curso-java-rest/pessoa?cpf=666666
