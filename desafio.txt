@@ -1,9 +1,14 @@
-Desafio para fazerem:
-
+Desafio 07/10:
 - consultar pessoa por cpf
-
 - consultar conta por id (se conseguirem fazer por agência e conta melhor ainda)
-
 - inserção múltipla das pessoas
-
 - inserção múltipla das contas
+-------------------------------------------------------------------------------
+Desafio 08/10:
+- Implementar os parsers, os dtos e alterar os serviços para utilizarem os dtos.
+Validações:
+- Não permitir alterar o cpf
+- Lançar uma exceção ao tentar alterar uma pessoa ou conta que não exista no map.
+- Lançar exceção quando não tiver nenhuma conta
+- Lançar exceção quando não tiver uma conta com o os informado
+-------------------------------------------------------------------------------

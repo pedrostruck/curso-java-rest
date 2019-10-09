@@ -7,7 +7,6 @@ public class PessoaParser extends AbstractParser<Pessoa, PessoaDTO> {
 
 	@Override
 	public Pessoa toEntity(PessoaDTO dto) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -15,7 +14,7 @@ public class PessoaParser extends AbstractParser<Pessoa, PessoaDTO> {
 	public PessoaDTO toDTO(Pessoa pessoa) {
 		PessoaDTO dto = new PessoaDTO();
 		dto.setNome(pessoa.getNome());
-		return null;
+		return dto;
 	}
 
 }

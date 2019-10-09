@@ -27,7 +27,7 @@ public abstract class AbstractParser<E, DTO> {
 		return listDTO;
 	}
 
-	public List<DTO> toMapDTO(Map<?, E> mapEntity) {
+	public List<DTO> toListDTO(Map<?, E> mapEntity) {
 		List<DTO> listDTO = new ArrayList<>();
 		for (Entry<?, E> e : mapEntity.entrySet()) {
 			listDTO.add(toDTO(e.getValue()));

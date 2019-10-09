@@ -134,7 +134,7 @@
 			"response": []
 		},
 		{
-			"name": "Read Pessoa map",
+			"name": "Read Pessoa ListDTO",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -155,7 +155,7 @@
 			"response": []
 		},
 		{
-			"name": "Read Conta map",
+			"name": "Read Conta ListDTO",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -171,6 +171,50 @@
 						"conta"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read Pessoa HashMap",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/curso-java-rest/pessoa/map",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso-java-rest",
+						"pessoa",
+						"map"
+					]
+				},
+				"description": "Read the MapRepositorio<Pessoa>"
+			},
+			"response": []
+		},
+		{
+			"name": "Read Conta HashMap",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/curso-java-rest/conta/map",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso-java-rest",
+						"conta",
+						"map"
+					]
+				},
+				"description": "Read the MapRepositorio<Pessoa>"
 			},
 			"response": []
 		},
@@ -239,39 +283,6 @@
 			"response": []
 		},
 		{
-			"name": "Update Bob to Bobby",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"nome\": \"Bobby\"\r\n}"
-				},
-				"url": {
-					"raw": "http://localhost:8080/curso-java-rest/pessoa/102",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"curso-java-rest",
-						"pessoa",
-						"102"
-					]
-				},
-				"description": "Update name to Struck"
-			},
-			"response": []
-		},
-		{
 			"name": "Delete PathParam103",
 			"request": {
 				"method": "DELETE",
@@ -321,6 +332,39 @@
 			"response": []
 		},
 		{
+			"name": "Update Bob to Bobby",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Bobby\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/curso-java-rest/pessoa/102",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso-java-rest",
+						"pessoa",
+						"102"
+					]
+				},
+				"description": "Update name to Struck"
+			},
+			"response": []
+		},
+		{
 			"name": "Associate Conta 203 to Bobby",
 			"request": {
 				"method": "PUT",
@@ -340,6 +384,103 @@
 						"203"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Validation Can't Create Incomplete Conta",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"206\",\r\n\t\"agencia\": \"24\",\r\n\t\"numeroDaConta\": \"007\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/curso-java-rest/conta/addSingle",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso-java-rest",
+						"conta",
+						"addSingle"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Validation Can't Create Incomplete Pessoa",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"Felicia\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/curso-java-rest/pessoa/addSingle",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso-java-rest",
+						"pessoa",
+						"addSingle"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Validation Can't Update CPF",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Bobby\",\r\n    \"cpf\": \"999\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/curso-java-rest/pessoa/102",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso-java-rest",
+						"pessoa",
+						"102"
+					]
+				},
+				"description": "Update name to Struck"
 			},
 			"response": []
 		}

@@ -1,6 +1,7 @@
 package com.stefanini.hackathon.rest.api;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
@@ -14,36 +15,20 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.stefanini.hackathon.rest.dto.PessoaDTO;
 import com.stefanini.hackathon.rest.entidades.Pessoa;
 import com.stefanini.hackathon.rest.exceptions.NegocioException;
+import com.stefanini.hackathon.rest.parsers.PessoaParser;
 import com.stefanini.hackathon.rest.persistence.Repositorio;
 
 @Path("/pessoa")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
 public class PessoaAPI {
 
 	@Inject
-	Repositorio repositorio;
+	private Repositorio repositorio;
 
-	@GET
-	public Response getPessoas() throws NegocioException {
-		if (repositorio.getMapPessoa().isEmpty()) {
-			throw new NegocioException("Não há pessoas cadastradas.");
-		}
-		return Response.ok(repositorio.getMapPessoa()).build();
-	}
-
-	@GET
-	@Path("/{cpf}")
-	public Response getPessoaByCPF(@PathParam("cpf") String cpf)
-			throws NegocioException {
-		Pessoa pessoa = repositorio.getMapPessoa().get(cpf);
-		if (pessoa == null) {
-			throw new NegocioException(
-					"Não há pessoa cadastrada com este CPF.");
-		}
-		return Response.ok(pessoa).build();
-	}
+	private PessoaParser pessoaParser = new PessoaParser();
 
 	@POST
 	@Path("/addSingle")
@@ -52,8 +37,12 @@ public class PessoaAPI {
 			throw new NegocioException("Já existe pessoa cadastrada com o CPF "
 					+ pessoa.getCpf() + ".");
 		}
+		if (pessoa.isIncomplete()) {
+			throw new NegocioException(
+					"Existem campos vazios nas informações da pessoa a ser adicionada! Preencha todos os campos.");
+		}
 		repositorio.getMapPessoa().put(pessoa.getCpf(), pessoa);
-		return Response.ok(repositorio.getMapPessoa()).build();
+		return getResponseWithDTO(repositorio);
 	}
 
 	@POST
@@ -68,28 +57,72 @@ public class PessoaAPI {
 			}
 			repositorio.getMapPessoa().put(pessoa.getCpf(), pessoa);
 		}
+		return getResponseWithDTO(repositorio);
+	}
+
+	@GET
+	@Path("/{cpf}")
+	public Response getPessoaByCPF(@PathParam("cpf") String cpf)
+			throws NegocioException {
+		Pessoa pessoa = repositorio.getMapPessoa().get(cpf);
+		if (pessoa == null) {
+			throw new NegocioException(
+					"Não existe pessoa cadastrada com este CPF.");
+		}
+		return Response.ok(pessoaParser.toDTO(pessoa)).build();
+	}
+
+	@GET
+	public Response getPessoas() throws NegocioException {
+		if (repositorio.getMapPessoa().isEmpty()) {
+			throw new NegocioException("Não existem pessoas cadastradas.");
+		}
+		return getResponseWithDTO(repositorio);
+	}
+
+	@GET
+	@Path("/map")
+	public Response getPessoasMap() throws NegocioException {
+		if (repositorio.getMapPessoa().isEmpty()) {
+			throw new NegocioException("Não existem pessoas cadastradas.");
+		}
 		return Response.ok(repositorio.getMapPessoa()).build();
+	}
+
+	@PUT
+	@Path("/{cpf}")
+	public Response alterar(Pessoa pessoa, @PathParam("cpf") String cpf)
+			throws NegocioException {
+		Pessoa pessoaFetched = repositorio.getMapPessoa().get(cpf);
+		if (pessoaFetched == null) {
+			throw new NegocioException(
+					"Não existe pessoa cadastrada com este CPF.");
+		}
+		if (cpf != pessoa.getCpf()) {
+			throw new NegocioException("O CPF não pode ser alterado.");
+		}
+		pessoa.setCpf(cpf);
+		repositorio.getMapPessoa().put(cpf, pessoa);
+		return getResponseWithDTO(repositorio);
 	}
 
 	@DELETE
 	@Path("/{cpf}")
 	public Response excluirPathParam(@PathParam("cpf") String cpf) {
 		repositorio.getMapPessoa().remove(cpf);
-		return Response.ok(repositorio.getMapPessoa()).build();
+		return getResponseWithDTO(repositorio);
 	}
 
 	@DELETE
 	public Response excluirQueryParam(@QueryParam("cpf") String cpf) {
 		repositorio.getMapPessoa().remove(cpf);
-		return Response.ok(repositorio.getMapPessoa()).build();
+		return getResponseWithDTO(repositorio);
 	}
 
-	@PUT
-	@Path("/{cpf}")
-	public Response alterar(Pessoa pessoa, @PathParam("cpf") String cpf) {
-		pessoa.setCpf(cpf);
-		repositorio.getMapPessoa().put(cpf, pessoa);
-		return Response.ok(repositorio.getMapPessoa()).build();
+	private Response getResponseWithDTO(Repositorio repositorio) {
+		List<PessoaDTO> listPessoasDTO = pessoaParser
+				.toListDTO(repositorio.getMapPessoa());
+		return Response.ok(listPessoasDTO).build();
 	}
 
 }

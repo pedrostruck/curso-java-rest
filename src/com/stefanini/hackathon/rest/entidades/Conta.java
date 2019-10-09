@@ -38,4 +38,12 @@ public class Conta {
 		this.id = id;
 	}
 
+	public boolean isIncomplete() {
+		if (this.id == null || this.agencia == null
+				|| this.numeroDaConta == null || this.senha == null) {
+			return true;
+		}
+		return false;
+	}
+
 }

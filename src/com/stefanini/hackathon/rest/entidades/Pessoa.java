@@ -28,5 +28,12 @@ public class Pessoa {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	
+
+	public boolean isIncomplete() {
+		if (this.nome == null || this.cpf == null) {
+			return true;
+		}
+		return false;
+	}
+
 }

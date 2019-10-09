@@ -7,7 +7,6 @@ public class ContaParser extends AbstractParser<Conta, ContaDTO> {
 
 	@Override
 	public Conta toEntity(ContaDTO dto) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -16,7 +15,7 @@ public class ContaParser extends AbstractParser<Conta, ContaDTO> {
 		ContaDTO dto = new ContaDTO();
 		dto.setAgencia(conta.getAgencia());
 		dto.setNumeroDaConta(conta.getNumeroDaConta());
-		return null;
+		return dto;
 	}
 
 }
