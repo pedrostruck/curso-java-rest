@@ -45,6 +45,7 @@ public class ContaAPI {
 			throw new NegocioException(
 					"Existem campos vazios na conta a ser adicionada! Preencha todos os campos.");
 		}
+		repositorio.getMapConta().put(conta.getId(), conta);
 		return getResponseWithDTO(repositorio);
 	}
 
@@ -118,6 +119,19 @@ public class ContaAPI {
 					"Não existe conta cadastrada com essa agência e número de conta.");
 		}
 		return Response.ok(contaParser.toDTO(contaFetched)).build();
+	}
+
+	@PUT
+	@Path("/associar/{cpf}/{id}")
+	public Response alterarConta(@PathParam("cpf") String cpf,
+			@PathParam("id") Integer id) throws NegocioException {
+		Pessoa pessoa = repositorio.getMapPessoa().get(cpf);
+		Conta conta = repositorio.getMapConta().get(id);
+		if (pessoa == null || conta == null) {
+			throw new NegocioException("Pessoa e/ou Conta inexistente(s).");
+		}
+		pessoa.setConta(conta);
+		return getResponseWithDTO(repositorio);
 	}
 
 	@PUT

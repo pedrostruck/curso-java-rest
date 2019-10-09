@@ -1,8 +1,18 @@
 package com.stefanini.hackathon.rest.entidades;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity()
+@Table(name = "pessoa")
 public class Pessoa {
+	@Id
+	private Integer id;
 	private String nome;
 	private String cpf;
+	@Transient
 	private Conta conta;
 
 	public Conta getConta() {

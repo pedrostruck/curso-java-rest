@@ -91,14 +91,15 @@ public class PessoaAPI {
 
 	@PUT
 	@Path("/{cpf}")
-	public Response alterar(Pessoa pessoa, @PathParam("cpf") String cpf)
+	public Response alterarPessoa(Pessoa pessoa, @PathParam("cpf") String cpf)
 			throws NegocioException {
 		Pessoa pessoaFetched = repositorio.getMapPessoa().get(cpf);
 		if (pessoaFetched == null) {
 			throw new NegocioException(
 					"Não existe pessoa cadastrada com este CPF.");
 		}
-		if (cpf != pessoa.getCpf()) {
+		if (pessoa.getCpf() != null
+				&& pessoa.getCpf() != pessoaFetched.getCpf()) {
 			throw new NegocioException("O CPF não pode ser alterado.");
 		}
 		pessoa.setCpf(cpf);
