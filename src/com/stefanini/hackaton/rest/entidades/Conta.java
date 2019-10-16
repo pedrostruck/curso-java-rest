@@ -38,9 +38,27 @@ public class Conta implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String conta;
 	private String agencia;
+	private String digitoAgencia;
+	private String digitoConta;
+	private String conta;
 	private String senha;
+
+	public String getDigitoAgencia() {
+		return digitoAgencia;
+	}
+
+	public void setDigitoAgencia(String digitoAgencia) {
+		this.digitoAgencia = digitoAgencia;
+	}
+
+	public String getDigitoConta() {
+		return digitoConta;
+	}
+
+	public void setDigitoConta(String digitoConta) {
+		this.digitoConta = digitoConta;
+	}
 
 	public Integer getId() {
 		return id;

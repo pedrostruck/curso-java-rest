@@ -39,12 +39,15 @@ public class ContaAPI {
 		return Response.ok(contaService.listAll()).build();
 	}
 
+	// TODO não faz sentido tendo em vista que o id é gerado automaticamente
+	// pelo banco
 	@GET
 	@Path("/{id}")
 	public Response consultarById(@PathParam("id") Integer id) {
 		return Response.ok(contaService.findById(id)).build();
 	}
 
+	@GET
 	@Path("/{agencia}/{conta}")
 	public Response consultar(@PathParam("agencia") String nrAgencia,
 					@PathParam("conta") String nrConta) {
@@ -53,13 +56,13 @@ public class ContaAPI {
 	}
 
 	@POST
-	@Path("/single")
+	@Path("/addSingle")
 	public Response inserir(Conta conta) {
 		return Response.ok(contaService.insertSingle(conta)).build();
 	}
 
 	@POST
-	@Path("/multi")
+	@Path("/addMultiple")
 	public Response inserir(List<Conta> listaConta) {
 		listaConta.forEach(conta -> {
 			contaService.insertSingle(conta);

@@ -38,13 +38,13 @@ public class PessoaAPI {
 	}
 
 	@POST
-	@Path("/single")
+	@Path("/addSingle")
 	public Response inserir(Pessoa pessoa) {
 		return Response.ok(pessoaService.insertSingle(pessoa)).build();
 	}
 
 	@POST
-	@Path("/multi")
+	@Path("/addMultiple")
 	public Response inserir(List<Pessoa> listaPessoa) {
 		listaPessoa.forEach(pessoa -> {
 			pessoaService.insertSingle(pessoa);

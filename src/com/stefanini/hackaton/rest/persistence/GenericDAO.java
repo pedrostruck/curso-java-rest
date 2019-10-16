@@ -9,7 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.transaction.Transactional;
 
 public class GenericDAO<PK, E extends Serializable> {
 
@@ -48,17 +47,14 @@ public class GenericDAO<PK, E extends Serializable> {
 		return em.find(clazz, pk);
 	}
 
-	@Transactional
 	public void insert(E e) {
 		em.persist(e);
 	}
 
-	@Transactional
 	public E update(E e) {
 		return em.merge(e);
 	}
 
-	@Transactional
 	public void remove(E e) {
 		em.remove(e);
 	}
