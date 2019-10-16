@@ -1,4 +1,4 @@
-package com.stefanini.hackathon.rest.dto;
+package com.stefanini.hackathon.rest.dtos;
 
 public class PessoaDTO {
 	private String nome;
@@ -10,5 +10,4 @@ public class PessoaDTO {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
 }

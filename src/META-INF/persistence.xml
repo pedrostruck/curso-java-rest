@@ -11,6 +11,11 @@
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
             <!-- As many hibernate properties as you need, some examples: -->
+            
+            <!-- TODO adicionado a propriedade abaixo -->
+            <!-- <property name="javax.persistence.jdbc.driver"
+				value="com.mysql.cj.jdbc.Driver" /> -->
+            
             <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.format_sql" value="true" />
             <!-- Drop and then re-create the database schema (don't do this in production) -->

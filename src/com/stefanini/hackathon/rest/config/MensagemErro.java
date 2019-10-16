@@ -5,7 +5,7 @@ public class MensagemErro {
 	private String mensagem;
 	private Integer statusCode;
 	private String stack;
-	
+
 	public String getStack() {
 		return stack;
 	}

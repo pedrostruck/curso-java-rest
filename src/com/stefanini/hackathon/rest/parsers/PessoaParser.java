@@ -1,6 +1,6 @@
 package com.stefanini.hackathon.rest.parsers;
 
-import com.stefanini.hackathon.rest.dto.PessoaDTO;
+import com.stefanini.hackathon.rest.dtos.PessoaDTO;
 import com.stefanini.hackathon.rest.entidades.Pessoa;
 
 public class PessoaParser extends AbstractParser<Pessoa, PessoaDTO> {

@@ -102,6 +102,49 @@
 			"response": []
 		},
 		{
+			"name": "Read Pessoa ListDTO",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/curso-java-rest/pessoa",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso-java-rest",
+						"pessoa"
+					]
+				},
+				"description": "Read the MapRepositorio<Pessoa>"
+			},
+			"response": []
+		},
+		{
+			"name": "Read Pessoa BD",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/curso-java-rest/pessoa/bd",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso-java-rest",
+						"pessoa",
+						"bd"
+					]
+				},
+				"description": "Read the MapRepositorio<Pessoa>"
+			},
+			"response": []
+		},
+		{
 			"name": "Create Single Conta",
 			"request": {
 				"method": "POST",
@@ -130,27 +173,6 @@
 						"addSingle"
 					]
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "Read Pessoa ListDTO",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/curso-java-rest/pessoa",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"curso-java-rest",
-						"pessoa"
-					]
-				},
-				"description": "Read the MapRepositorio<Pessoa>"
 			},
 			"response": []
 		},

@@ -1,6 +1,6 @@
 package com.stefanini.hackathon.rest.parsers;
 
-import com.stefanini.hackathon.rest.dto.ContaDTO;
+import com.stefanini.hackathon.rest.dtos.ContaDTO;
 import com.stefanini.hackathon.rest.entidades.Conta;
 
 public class ContaParser extends AbstractParser<Conta, ContaDTO> {
@@ -14,7 +14,7 @@ public class ContaParser extends AbstractParser<Conta, ContaDTO> {
 	public ContaDTO toDTO(Conta conta) {
 		ContaDTO dto = new ContaDTO();
 		dto.setAgencia(conta.getAgencia());
-		dto.setNumeroDaConta(conta.getNumeroDaConta());
+		dto.setConta(conta.getConta());
 		return dto;
 	}
 

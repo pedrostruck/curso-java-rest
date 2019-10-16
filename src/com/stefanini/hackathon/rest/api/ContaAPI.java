@@ -1,10 +1,6 @@
 package com.stefanini.hackathon.rest.api;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
@@ -14,155 +10,87 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.stefanini.hackathon.rest.dto.ContaDTO;
+import com.stefanini.hackathon.rest.dtos.LoginDTO;
 import com.stefanini.hackathon.rest.entidades.Conta;
-import com.stefanini.hackathon.rest.entidades.Pessoa;
 import com.stefanini.hackathon.rest.exceptions.NegocioException;
-import com.stefanini.hackathon.rest.parsers.ContaParser;
-import com.stefanini.hackathon.rest.persistence.Repositorio;
+import com.stefanini.hackathon.rest.service.ContaService;
 
 @Path("/conta")
-@Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
+@Produces(MediaType.APPLICATION_JSON)
 public class ContaAPI {
 
 	@Inject
-	Repositorio repositorio;
+	ContaService contaService;
 
-	private ContaParser contaParser = new ContaParser();
-
+	@Path("/autenticar")
 	@POST
-	@Path("/addSingle")
-	public Response inserirConta(Conta conta) throws NegocioException {
-		if (repositorio.getMapConta().get(conta.getId()) != null) {
-			throw new NegocioException("Já existe conta cadastrada com o id "
-					+ conta.getId() + ".");
-		}
-		if (conta.isIncomplete()) {
-			throw new NegocioException(
-					"Existem campos vazios na conta a ser adicionada! Preencha todos os campos.");
-		}
-		repositorio.getMapConta().put(conta.getId(), conta);
-		return getResponseWithDTO(repositorio);
-	}
-
-	@POST
-	@Path("/addMultiple")
-	public Response inserirContas(ArrayList<Conta> contas)
-			throws NegocioException {
-		for (Conta conta : contas) {
-			if (repositorio.getMapConta().get(conta.getId()) != null) {
-				throw new NegocioException(
-						"Já existe conta cadastrada com o id " + conta.getId()
-								+ ".");
-			}
-			if (conta.isIncomplete()) {
-				throw new NegocioException(
-						"Existem campos vazios na conta a ser adicionada! Preencha todos os campos.");
-			}
-			repositorio.getMapConta().put(conta.getId(), conta);
-		}
-		return getResponseWithDTO(repositorio);
+	public Response login(LoginDTO dto) throws NegocioException {
+		// TODO autenticar com a senha
+		dto.setSenha(null);
+		return Response.ok(dto).build();
 	}
 
 	@GET
-	public Response getContas() throws NegocioException {
-		if (repositorio.getMapConta().isEmpty()) {
-			throw new NegocioException("Não existem contas cadastradas.");
-		}
-		return getResponseWithDTO(repositorio);
-	}
-
-	@GET
-	@Path("/map")
-	public Response getContasMap() throws NegocioException {
-		if (repositorio.getMapConta().isEmpty()) {
-			throw new NegocioException("Não existem contas cadastradas.");
-		}
-		return Response.ok(repositorio.getMapConta()).build();
+	@Path("/all")
+	public Response consultarAll() {
+		return Response.ok(contaService.listAll()).build();
 	}
 
 	@GET
 	@Path("/{id}")
-	public Response getContaByID(@PathParam("id") Integer id)
-			throws NegocioException {
-		Conta conta = repositorio.getMapConta().get(id);
-		if (conta == null) {
-			throw new NegocioException(
-					"Não existe conta cadastrada com esse id.");
-		}
-		return Response.ok(contaParser.toDTO(conta)).build();
+	public Response consultarById(@PathParam("id") Integer id) {
+		return Response.ok(contaService.findById(id)).build();
 	}
 
-	@GET
-	@Path("/{agencia}/{numeroDaConta}")
-	public Response getContaByAgenciaEConta(
-			@PathParam("agencia") String agencia,
-			@PathParam("numeroDaConta") String numeroDaConta)
-			throws NegocioException {
-		Conta contaFetched = null;
-		Iterator<Entry<Integer, Conta>> itr = repositorio.getMapConta()
-				.entrySet().iterator();
-		while (itr.hasNext()) {
-			Map.Entry<Integer, Conta> entry = itr.next();
-			Conta currentConta = entry.getValue();
-			if (currentConta.getAgencia().equals(agencia)
-					&& currentConta.getNumeroDaConta().equals(numeroDaConta)) {
-				contaFetched = currentConta;
-			}
-		}
-		if (contaFetched == null) {
-			throw new NegocioException(
-					"Não existe conta cadastrada com essa agência e número de conta.");
-		}
-		return Response.ok(contaParser.toDTO(contaFetched)).build();
+	@Path("/{agencia}/{conta}")
+	public Response consultar(@PathParam("agencia") String nrAgencia,
+					@PathParam("conta") String nrConta) {
+		return Response.ok(contaService.findByAgenciaConta(nrAgencia, nrConta))
+						.build();
 	}
 
-	@PUT
-	@Path("/associar/{cpf}/{id}")
-	public Response alterarConta(@PathParam("cpf") String cpf,
-			@PathParam("id") Integer id) throws NegocioException {
-		Pessoa pessoa = repositorio.getMapPessoa().get(cpf);
-		Conta conta = repositorio.getMapConta().get(id);
-		if (pessoa == null || conta == null) {
-			throw new NegocioException("Pessoa e/ou Conta inexistente(s).");
-		}
-		pessoa.setConta(conta);
-		return getResponseWithDTO(repositorio);
+	@POST
+	@Path("/single")
+	public Response inserir(Conta conta) {
+		return Response.ok(contaService.insertSingle(conta)).build();
 	}
 
-	@PUT
-	@Path("/associar/{cpf}/{id}")
-	public Response associarContaAPessoa(@PathParam("cpf") String cpf,
-			@PathParam("id") Integer id) throws NegocioException {
-		Pessoa pessoa = repositorio.getMapPessoa().get(cpf);
-		Conta conta = repositorio.getMapConta().get(id);
-		if (pessoa == null || conta == null) {
-			throw new NegocioException("Pessoa e/ou Conta inexistente(s).");
-		}
-		pessoa.setConta(conta);
-		return getResponseWithDTO(repositorio);
+	@POST
+	@Path("/multi")
+	public Response inserir(List<Conta> listaConta) {
+		listaConta.forEach(conta -> {
+			contaService.insertSingle(conta);
+		});
+		return Response.ok().build();
 	}
 
 	@DELETE
 	@Path("/{id}")
-	public Response excluirPathParam(@PathParam("id") Integer id) {
-		repositorio.getMapConta().remove(id);
-		return getResponseWithDTO(repositorio);
+	public Response excluir(@PathParam("id") Integer id) {
+		return Response.ok(contaService.removeById(id)).build();
 	}
 
-	@DELETE
-	public Response excluirQueryParam(@QueryParam("id") Integer id) {
-		repositorio.getMapConta().remove(id);
-		return getResponseWithDTO(repositorio);
+//	@DELETE
+//	public Response excluir2(@QueryParam("id") Integer id) {
+//		return Response.ok().build();
+//	}
+
+	@PUT
+	@Path("/update")
+	public Response alterar(Conta conta) {
+		Conta contaPersistida = contaService.findById(conta.getId());
+		contaPersistida.setSenha(conta.getSenha());
+		return Response.ok(contaService.updateConta(contaPersistida)).build();
 	}
 
-	private Response getResponseWithDTO(Repositorio repositorio) {
-		List<ContaDTO> listContasDTO = contaParser
-				.toListDTO(repositorio.getMapConta());
-		return Response.ok(listContasDTO).build();
+	@PUT
+	@Path("/associar/{cpf}/{id}")
+	public Response associarACpf(@PathParam("cpf") String cpf,
+					@PathParam("id") Integer id) {
+		return Response.ok(contaService.associateToPessoa(id, cpf)).build();
 	}
+
 }

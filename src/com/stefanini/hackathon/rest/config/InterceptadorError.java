@@ -11,6 +11,7 @@ import javax.ws.rs.ext.Provider;
 
 import com.stefanini.hackathon.rest.exceptions.NegocioException;
 
+
 @Provider
 public class InterceptadorError implements ExceptionMapper<Exception> {
 
@@ -18,21 +19,30 @@ public class InterceptadorError implements ExceptionMapper<Exception> {
 	public Response toResponse(Exception ex) {
 		Status status = null;
 		final StringWriter sw = new StringWriter();
-
+		
 		if (ex instanceof NegocioException) {
 			status = Status.BAD_REQUEST;
+		
 		} else {
 			status = Status.INTERNAL_SERVER_ERROR;
 			ex.printStackTrace(new PrintWriter(sw));
+			ex.printStackTrace();
 		}
-
+		
 		MensagemErro msg = new MensagemErro();
 		msg.setMensagem(ex.getMessage());
 		msg.setStatusCode(status.getStatusCode());
 		msg.setStack(sw.toString());
-
-		return Response.ok(msg).type(MediaType.APPLICATION_JSON)
+		
+		return Response.ok(msg)
+				.type(MediaType.APPLICATION_JSON)
 				.status(status.getStatusCode()).build();
 	}
 
+	
+	
+	
+	
+	
+	
 }
